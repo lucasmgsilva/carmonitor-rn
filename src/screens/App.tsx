@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Platform, PermissionsAndroid} from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { MapEvent, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 
 interface Region {
@@ -14,11 +14,12 @@ const App = () => {
   const [region, setRegion] = useState<Region>();
   const [hasLocationPermission, setHasLocationPermission] =
     useState<boolean>(false);
+  const [markers, setMarkers] = useState<any[]>([]);
 
   function requestLocationPermission() {
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    ).then(() => {
+    ).then(value => {
       console.log('Permissão concedida!');
       setHasLocationPermission(true);
     });
@@ -54,7 +55,24 @@ const App = () => {
 
   useEffect(() => {
     getUserLocation();
-  }, [hasLocationPermission]);
+  }, []);
+
+  function addMarker (event: MapEvent){
+    setMarkers([...markers, {
+      latitude: event.nativeEvent.coordinate.latitude,
+      longitude: event.nativeEvent.coordinate.longitude,
+      /*title: 'Marker Title',
+      description: 'Marker Description',*/
+    }]);
+
+    setRegion({
+      ...region,
+      latitude: event.nativeEvent.coordinate.latitude,
+      longitude: event.nativeEvent.coordinate.longitude,
+    } as Region);
+    
+    console.log(event.nativeEvent.coordinate);
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -71,7 +89,21 @@ const App = () => {
         zoomEnabled={true}
         minZoomLevel={17}
         showsUserLocation={true}
-      />
+        loadingEnabled={true}
+        onLongPress={addMarker}
+      >
+        {
+          markers?.map((marker, index) => (
+            <Marker
+              key={index}
+              coordinate={{
+                ...marker
+              }}
+              pinColor='#ff0000'
+            />
+          ))
+        }
+      </MapView>
     </SafeAreaView>
   );
 };
