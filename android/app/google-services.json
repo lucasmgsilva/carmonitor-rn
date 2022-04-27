@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "359820026787",
+    "firebase_url": "https://carmonitor-4fc29-default-rtdb.firebaseio.com",
+    "project_id": "carmonitor-4fc29",
+    "storage_bucket": "carmonitor-4fc29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359820026787:android:02490e2f4d50d0d7b9b016",
+        "android_client_info": {
+          "package_name": "com.carmonitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359820026787-3t2s6e2m73d4iuu9upnausd4536oap1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carmonitor",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "359820026787-g0egvaqtdml1a2dlo7p2aalh2c288vn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOoRtiyioet8lyBLL7s-S0CC9gU8zSEmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359820026787-g0egvaqtdml1a2dlo7p2aalh2c288vn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
