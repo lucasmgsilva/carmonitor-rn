@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Platform, PermissionsAndroid} from 'react-native';
+import {SafeAreaView, Platform, PermissionsAndroid, Alert} from 'react-native';
 import MapView, { MapEvent, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
+import firestore from '@react-native-firebase/firestore';
 
 interface Region {
   latitude: number;
@@ -64,6 +65,15 @@ const App = () => {
       /*title: 'Marker Title',
       description: 'Marker Description',*/
     }]);
+
+    firestore().collection('markers').add({
+        latitude: event.nativeEvent.coordinate.latitude,
+        longitude: event.nativeEvent.coordinate.longitude,
+    }).then(() => {
+        Alert.alert('Marker added!');
+    }).catch(() => {
+        Alert.alert('Error adding marker!');
+    });
 
     setRegion({
       ...region,
