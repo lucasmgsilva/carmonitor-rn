@@ -69,6 +69,7 @@ const App = () => {
     firestore().collection('markers').add({
         latitude: event.nativeEvent.coordinate.latitude,
         longitude: event.nativeEvent.coordinate.longitude,
+        createdAt: firestore.FieldValue.serverTimestamp(),
     }).then(() => {
         Alert.alert('Marker added!');
     }).catch(() => {
