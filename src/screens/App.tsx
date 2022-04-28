@@ -3,6 +3,10 @@ import {SafeAreaView, Platform, PermissionsAndroid, Alert} from 'react-native';
 import MapView, { MapEvent, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
+import database from '@react-native-firebase/database';
+
+const carsReference = database().ref('/cars');
 
 interface Region {
   latitude: number;
