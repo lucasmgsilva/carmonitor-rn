@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Platform, PermissionsAndroid, Alert} from 'react-native';
-import MapView, { MapEvent, Marker } from 'react-native-maps';
+import {
+  SafeAreaView,
+  Platform,
+  PermissionsAndroid,
+  Alert,
+  View,
+} from 'react-native';
+import MapView, {MapEvent, Marker} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import firestore from '@react-native-firebase/firestore';
-import { firebase } from '@react-native-firebase/database';
 import database from '@react-native-firebase/database';
+import { Icon } from '../Components/Marker/style';
 
 const carsReference = database().ref('/cars');
 
@@ -62,15 +68,20 @@ const App = () => {
     getUserLocation();
   }, []);
 
-  function addMarker (event: MapEvent){
-    setMarkers([...markers, {
-      latitude: event.nativeEvent.coordinate.latitude,
-      longitude: event.nativeEvent.coordinate.longitude,
-      /*title: 'Marker Title',
+  function addMarker(event: MapEvent) {
+    setMarkers([
+      ...markers,
+      {
+        latitude: event.nativeEvent.coordinate.latitude,
+        longitude: event.nativeEvent.coordinate.longitude,
+        /*title: 'Marker Title',
       description: 'Marker Description',*/
-    }]);
+      },
+    ]);
 
-    firestore().collection('markers').add({
+    Alert.alert('Marker added!');
+
+    /*firestore().collection('markers').add({
         latitude: event.nativeEvent.coordinate.latitude,
         longitude: event.nativeEvent.coordinate.longitude,
         createdAt: firestore.FieldValue.serverTimestamp(),
@@ -78,14 +89,14 @@ const App = () => {
         Alert.alert('Marker added!');
     }).catch(() => {
         Alert.alert('Error adding marker!');
-    });
+    });*/
 
-    setRegion({
+    /* setRegion({
       ...region,
       latitude: event.nativeEvent.coordinate.latitude,
       longitude: event.nativeEvent.coordinate.longitude,
-    } as Region);
-    
+    } as Region); */
+
     console.log(event.nativeEvent.coordinate);
   }
 
@@ -101,23 +112,30 @@ const App = () => {
           longitudeDelta: 0.0421,
         }} */
         region={region}
+        rotateEnabled={false}
         zoomEnabled={true}
         minZoomLevel={17}
         showsUserLocation={true}
         loadingEnabled={true}
-        onLongPress={addMarker}
-      >
-        {
-          markers?.map((marker, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                ...marker
-              }}
-              pinColor='#ff0000'
+        showsPointsOfInterest={false}
+        showsBuildings={false}
+        onLongPress={addMarker}>
+        {markers?.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              ...marker,
+            }}
+            /*pinColor='#ff0000'*/
+            /*icon={require('../assets/car.png')}*/
+            >
+            {/* <View style={{width: 10, height: 10, backgroundColor: 'green', borderRadius:100}}/> */}
+            <Icon 
+              size={35}
+              source={require('../assets/car.png')}
             />
-          ))
-        }
+          </Marker>
+        ))}
       </MapView>
     </SafeAreaView>
   );
