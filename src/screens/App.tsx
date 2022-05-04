@@ -10,9 +10,9 @@ import MapView, {MapEvent, Marker} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
-import { Icon } from '../Components/Marker/style';
+import {Icon} from '../Components/Marker/style';
 
-const carsReference = database().ref('/cars');
+const carsReference = database().ref('/cars/');
 
 interface Region {
   latitude: number;
@@ -21,11 +21,40 @@ interface Region {
   longitudeDelta: number;
 }
 
+interface Location {
+  lat: number;
+  lng: number;
+  speed: number;
+}
+
+interface Car {
+  id?: string;
+  location: Location;
+}
+
 const App = () => {
   const [region, setRegion] = useState<Region>();
   const [hasLocationPermission, setHasLocationPermission] =
     useState<boolean>(false);
   const [markers, setMarkers] = useState<any[]>([]);
+  const [cars, setCars] = useState<Car[]>([] as Car[]);
+
+  useEffect(() => {
+    carsReference.on('value', snapshot => {
+      const updatedCars = [];
+
+      snapshot.forEach(child => {
+        let newCar = {
+          id: child.key,
+          ...child.val(),
+        };
+        console.log('Car:', newCar);
+        updatedCars.push(child.val() as Car);
+      });
+
+      setCars(updatedCars);
+    });
+  }, []);
 
   function requestLocationPermission() {
     PermissionsAndroid.request(
@@ -126,16 +155,38 @@ const App = () => {
             coordinate={{
               ...marker,
             }}
-            /*pinColor='#ff0000'*/
+            pinColor="#ff0000"
             /*icon={require('../assets/car.png')}*/
-            >
-            {/* <View style={{width: 10, height: 10, backgroundColor: 'green', borderRadius:100}}/> */}
-            <Icon 
-              size={35}
-              source={require('../assets/car.png')}
-            />
+          />
+        ))}
+
+        {cars?.map((car, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: car?.location?.lat,
+              longitude: car?.location?.lng,
+            }}>
+            <Icon size={35} source={require('../assets/car.png')} />
           </Marker>
         ))}
+
+        {/* {cars?.map((car, index) => {
+          console.log('CAR: ', car);
+
+          return (
+            car?.location && (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: car?.location?.lat,
+                  longitude: car?.location?.lng,
+                }}>
+                <Icon size={35} source={require('../assets/car.png')} />
+              </Marker>
+            );
+          );
+        })} */}
       </MapView>
     </SafeAreaView>
   );
