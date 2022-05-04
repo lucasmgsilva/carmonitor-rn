@@ -10,7 +10,7 @@ import MapView, {MapEvent, Marker} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
-import {Icon} from '../Components/Marker/style';
+import {Icon, IconArea, Triangle} from '../Components/Marker/style';
 
 const carsReference = database().ref('/cars/');
 
@@ -134,12 +134,12 @@ const App = () => {
       <MapView
         onMapReady={onMapReady}
         style={{flex: 1}}
-        /* initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+        initialRegion={{
+          latitude: -21.615968,
+          longitude: -49.067915,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }} */
+        }}
         region={region}
         rotateEnabled={false}
         zoomEnabled={true}
@@ -166,8 +166,13 @@ const App = () => {
             coordinate={{
               latitude: car?.location?.lat,
               longitude: car?.location?.lng,
-            }}>
-            <Icon size={35} source={require('../assets/car.png')} />
+            }}
+            title="Marker Title"
+            description="Marker Description">
+            <IconArea>
+              <Icon size={35} source={require('../assets/car.png')} />
+              <Icon size={15} source={require('../assets/triangle.png')} />
+            </IconArea>
           </Marker>
         ))}
 
