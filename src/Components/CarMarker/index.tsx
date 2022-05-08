@@ -1,5 +1,6 @@
 import React from 'react';
 import {Marker as MarkerRNM} from 'react-native-maps';
+import {CarCallout} from './CarCallout';
 import {Icon, IconArea} from './style';
 
 interface Coordinate {
@@ -9,21 +10,17 @@ interface Coordinate {
 
 interface MarkerProps {
   coordinate: Coordinate;
-  title: string;
-  description?: string;
+  plate: string;
 }
 
-export const CarMarker = function ({
-  coordinate,
-  title,
-  description,
-}: MarkerProps) {
+export const CarMarker = function ({coordinate, plate}: MarkerProps) {
   return (
-    <MarkerRNM coordinate={coordinate} title={title} description={description}>
+    <MarkerRNM coordinate={coordinate}>
       <IconArea>
         <Icon size={35} source={require('../../assets/car.png')} />
         <Icon size={10} source={require('../../assets/triangle.png')} />
       </IconArea>
+      <CarCallout plate={plate} />
     </MarkerRNM>
   );
 };

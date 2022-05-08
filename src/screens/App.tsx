@@ -24,6 +24,7 @@ interface Location {
 
 interface Car {
   id: string;
+  playAlarmSound: boolean;
   location: Location;
 }
 
@@ -137,7 +138,7 @@ const App = () => {
               latitude: car?.location?.lat,
               longitude: car?.location?.lng,
             }}
-            title={car?.id}
+            plate={car?.id}
             /*description="Marker Description"*/
           />
         ))}
@@ -149,7 +150,7 @@ const App = () => {
               key={index}
               plate={car?.id}
               speed={car.location.speed}
-              onPress={() => handleCarItemClick(car.location)}
+              onPress={() => handleCarItemClick(car?.location)}
             />
           ))}
         </>

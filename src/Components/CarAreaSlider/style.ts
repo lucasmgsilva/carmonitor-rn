@@ -5,7 +5,6 @@ import {Dimensions} from 'react-native';
 export const CarContainer = styled.ScrollView.attrs({
   horizontal: true,
 })`
-  /* background-color: red; */
   width: 100%;
   max-height: ${Dimensions.get('screen').height * 0.15}px;
   padding-bottom: ${RFValue(5)}px;

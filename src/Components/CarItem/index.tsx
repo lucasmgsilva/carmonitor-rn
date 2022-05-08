@@ -14,7 +14,7 @@ export const CarItem = function ({plate, speed, onPress}: CarItemProps) {
       <Icon size={35} source={require('../../assets/car.png')} />
       <CarItemRow>Placa: {plate}</CarItemRow>
       <CarItemRow>
-        Velocidade: {speed > 5 ? speed.toFixed(2) : (0).toFixed(2)} Km/h
+        Vel.: {speed > 5 ? speed.toFixed(2) : (0).toFixed(2)} Km/h
       </CarItemRow>
     </CarItemContainer>
   );
