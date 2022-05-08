@@ -1,5 +1,5 @@
-import React from 'react';
-import {Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {RTDB} from '../../../services/RTDB';
 import {
   CarCalloutArea,
   CarCalloutButton,
@@ -12,17 +12,29 @@ interface CarCalloutProps {
 }
 
 export function CarCallout({plate}: CarCalloutProps) {
+  const [playAlarmSound, setPlayAlarmSound] = useState<boolean>();
+
   function handleClick() {
-    Alert.alert('Carro', `Placa: ${plate}`);
-    console.log('click');
+    RTDB.carsReference.child(plate).update({
+      playAlarmSound: !playAlarmSound,
+    });
   }
 
+  useEffect(() => {
+    RTDB.carsReference.child(plate).on('value', snapshot => {
+      console.log('playAlarmSound: ', snapshot.val().playAlarmSound);
+      setPlayAlarmSound(snapshot.val().playAlarmSound);
+    });
+  }, []);
+
   return (
-    <CarCalloutContainer tooltip>
-      <CarCalloutArea onPress={handleClick}>
+    <CarCalloutContainer tooltip onPress={handleClick}>
+      <CarCalloutArea>
         <CarCalloutText>{plate}</CarCalloutText>
         <CarCalloutButton>
-          <CarCalloutText>TOCAR ALARME</CarCalloutText>
+          <CarCalloutText>
+            {playAlarmSound ? 'CANCELAR ALARME' : 'TOCAR ALARME'}
+          </CarCalloutText>
         </CarCalloutButton>
       </CarCalloutArea>
     </CarCalloutContainer>

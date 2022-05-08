@@ -1,13 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, Platform, PermissionsAndroid} from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import database from '@react-native-firebase/database';
 import {CarMarker} from '../Components/CarMarker';
 import {CarAreaSlider} from '../Components/CarAreaSlider';
 import {CarItem} from '../Components/CarItem';
-
-const carsReference = database().ref('/cars/');
+import {RTDB} from '../services/RTDB';
 
 interface Region {
   latitude: number;
@@ -34,9 +32,10 @@ const App = () => {
   const [region, setRegion] = useState<Region>();
   const [cars, setCars] = useState<Car[]>([]);
   const mapViewRef = useRef<MapView>();
+  const markersRef = useRef<Marker[]>([]);
 
   useEffect(() => {
-    carsReference.on('value', snapshot => {
+    RTDB.carsReference.on('value', snapshot => {
       const updatedCars = [] as Car[];
 
       snapshot.forEach(child => {
@@ -87,14 +86,20 @@ const App = () => {
   }
 
   function handleCarItemClick(location: Location) {
-    mapViewRef.current?.animateToCoordinate(
+    setRegion({
+      ...region,
+      latitude: location.lat,
+      longitude: location.lng,
+    });
+
+    /* mapViewRef.current?.animateToCoordinate(
       {
         ...region,
         latitude: location.lat,
         longitude: location.lng,
       },
       1000,
-    );
+    ); */
   }
 
   useEffect(() => {
@@ -117,7 +122,7 @@ const App = () => {
           bottom: 0,
           right: 0,
         }}
-        initialRegion={region}
+        //initialRegion={region}
         region={region}
         //onRegionChange={}
         rotateEnabled={false}
@@ -139,6 +144,7 @@ const App = () => {
               longitude: car?.location?.lng,
             }}
             plate={car?.id}
+            ref={el => markersRef.current.push(el)}
             /*description="Marker Description"*/
           />
         ))}
