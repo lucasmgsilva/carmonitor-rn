@@ -32,52 +32,39 @@ const App = () => {
   const [region, setRegion] = useState<Region>();
   const [cars, setCars] = useState<Car[]>([]);
   const mapViewRef = useRef<MapView>();
-  const markersRef = useRef<Marker[]>([]);
 
-  useEffect(() => {
-    RTDB.carsReference.on('value', snapshot => {
-      const updatedCars = [] as Car[];
-
-      snapshot.forEach(child => {
-        let newCar = {
-          id: child.key,
-          ...child.val(),
-        };
-        updatedCars.push(newCar);
-        console.log('Car: ', newCar);
-      });
-
-      setCars(updatedCars);
-    });
-  }, []);
+  const latitudeDelta = 0.0143;
+  const longitudeDelta = 0.0134;
 
   function requestLocationPermission() {
+    console.log('inicio solicitando permissão')
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     ).then(value => {
+      console.log('aqui')
       setHasLocationPermission(true);
-      getUserLocation();
     });
+    console.log('FIMMM solicitando permissão')
   }
 
   function getUserLocation() {
+    console.log('verificando se tem permissão!');
     if (hasLocationPermission) {
+      console.log('TEM PERMISSÃO!!!')
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
           setRegion({
             latitude,
             longitude,
-            latitudeDelta: 0.0143,
-            longitudeDelta: 0.0134,
+            latitudeDelta,
+            longitudeDelta
           });
           console.log('User: ', {latitude, longitude});
         },
         error => console.log(error),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
       );
-    } else {
-      requestLocationPermission();
     }
   }
 
@@ -87,24 +74,35 @@ const App = () => {
 
   function handleCarItemClick(location: Location) {
     setRegion({
-      ...region,
       latitude: location.lat,
       longitude: location.lng,
+      latitudeDelta,
+      longitudeDelta
     });
-
-    /* mapViewRef.current?.animateToCoordinate(
-      {
-        ...region,
-        latitude: location.lat,
-        longitude: location.lng,
-      },
-      1000,
-    ); */
   }
 
   useEffect(() => {
+    RTDB.carsReference.on('value', snapshot => {
+      const updatedCars = [] as Car[];
+
+      snapshot.forEach(child => {
+        const newCar = {
+          id: child.key,
+          ...child.val(),
+        };
+        updatedCars.push(newCar);
+        console.log('Car: ', newCar);
+      });
+
+      setCars(updatedCars);
+    });
+
     getUserLocation();
   }, []);
+
+  useEffect(() => {
+    getUserLocation();
+  }, [hasLocationPermission]);
 
   return (
     <SafeAreaView
@@ -127,7 +125,7 @@ const App = () => {
         //onRegionChange={}
         rotateEnabled={false}
         scrollEnabled={true}
-        zoomEnabled={true}
+        zoomEnabled={false}
         minZoomLevel={19}
         showsPointsOfInterest={false}
         showsBuildings={false}
@@ -144,8 +142,6 @@ const App = () => {
               longitude: car?.location?.lng,
             }}
             plate={car?.id}
-            ref={el => markersRef.current.push(el)}
-            /*description="Marker Description"*/
           />
         ))}
       </MapView>

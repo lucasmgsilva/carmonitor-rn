@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {Ref, useEffect, useRef, useState} from 'react';
 import {RTDB} from '../../../services/RTDB';
+import {Marker as MarkerRNM} from 'react-native-maps';
 import {
   CarCalloutArea,
   CarCalloutButton,
@@ -9,9 +10,10 @@ import {
 
 interface CarCalloutProps {
   plate: string;
+  markerRef: Ref<MarkerRNM>;
 }
 
-export function CarCallout({plate}: CarCalloutProps) {
+export function CarCallout({plate, markerRef}: CarCalloutProps) {
   const [playAlarmSound, setPlayAlarmSound] = useState<boolean>();
 
   function handleClick() {
@@ -22,7 +24,10 @@ export function CarCallout({plate}: CarCalloutProps) {
 
   useEffect(() => {
     RTDB.carsReference.child(plate).on('value', snapshot => {
-      console.log('playAlarmSound: ', snapshot.val().playAlarmSound);
+      markerRef?.current?.hideCallout();
+      setTimeout(() => {
+        markerRef?.current?.showCallout();
+      }, 200);
       setPlayAlarmSound(snapshot.val().playAlarmSound);
     });
   }, []);
