@@ -37,20 +37,15 @@ const App = () => {
   const longitudeDelta = 0.0134;
 
   function requestLocationPermission() {
-    console.log('inicio solicitando permissão')
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
     ).then(value => {
-      console.log('aqui')
       setHasLocationPermission(true);
     });
-    console.log('FIMMM solicitando permissão')
   }
 
   function getUserLocation() {
-    console.log('verificando se tem permissão!');
     if (hasLocationPermission) {
-      console.log('TEM PERMISSÃO!!!')
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
