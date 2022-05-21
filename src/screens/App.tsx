@@ -53,7 +53,7 @@ const App = () => {
             latitude,
             longitude,
             latitudeDelta,
-            longitudeDelta
+            longitudeDelta,
           });
           console.log('User: ', {latitude, longitude});
         },
@@ -72,7 +72,7 @@ const App = () => {
       latitude: location.lat,
       longitude: location.lng,
       latitudeDelta,
-      longitudeDelta
+      longitudeDelta,
     });
   }
 
@@ -115,8 +115,8 @@ const App = () => {
           bottom: 0,
           right: 0,
         }}
-        //initialRegion={region}
-        region={region}
+        initialRegion={region}
+        //region={region}
         //onRegionChange={}
         rotateEnabled={false}
         scrollEnabled={true}

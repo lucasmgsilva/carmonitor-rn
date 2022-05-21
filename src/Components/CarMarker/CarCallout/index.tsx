@@ -23,11 +23,14 @@ export function CarCallout({plate, markerRef}: CarCalloutProps) {
   }
 
   useEffect(() => {
+    markerRef?.current?.hideCallout();
+    setTimeout(() => {
+      markerRef?.current?.showCallout();
+    }, 200);
+  }, [playAlarmSound]);
+
+  useEffect(() => {
     RTDB.carsReference.child(plate).on('value', snapshot => {
-      markerRef?.current?.hideCallout();
-      setTimeout(() => {
-        markerRef?.current?.showCallout();
-      }, 200);
       setPlayAlarmSound(snapshot.val().playAlarmSound);
     });
   }, []);
