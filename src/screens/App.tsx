@@ -68,12 +68,22 @@ const App = () => {
   }
 
   function handleCarItemClick(location: Location) {
-    setRegion({
+    mapViewRef.current?.animateToCoordinate(
+      {
+        latitude: location.lat,
+        longitude: location.lng,
+        latitudeDelta,
+        longitudeDelta,
+      },
+      1000,
+    );
+
+    /* setRegion({
       latitude: location.lat,
       longitude: location.lng,
       latitudeDelta,
       longitudeDelta,
-    });
+    }); */
   }
 
   useEffect(() => {
