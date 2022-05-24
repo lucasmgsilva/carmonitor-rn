@@ -1,4 +1,4 @@
-import React, {Ref, useEffect, useRef, useState} from 'react';
+import React, {Ref, useEffect, useState} from 'react';
 import {RTDB} from '../../../services/RTDB';
 import {Marker as MarkerRNM} from 'react-native-maps';
 import {
@@ -7,6 +7,7 @@ import {
   CarCalloutContainer,
   CarCalloutText,
 } from './style';
+import {useTranslation} from '../../../i18n';
 
 interface CarCalloutProps {
   plate: string;
@@ -14,6 +15,7 @@ interface CarCalloutProps {
 }
 
 export function CarCallout({plate, markerRef}: CarCalloutProps) {
+  const {t} = useTranslation();
   const [playAlarmSound, setPlayAlarmSound] = useState<boolean>();
 
   function handleClick() {
@@ -41,7 +43,9 @@ export function CarCallout({plate, markerRef}: CarCalloutProps) {
         <CarCalloutText>{plate}</CarCalloutText>
         <CarCalloutButton>
           <CarCalloutText>
-            {playAlarmSound ? 'CANCELAR ALARME' : 'TOCAR ALARME'}
+            {playAlarmSound
+              ? t('alarm.cancel').toUpperCase()
+              : t('alarm.play').toUpperCase()}
           </CarCalloutText>
         </CarCalloutButton>
       </CarCalloutArea>
