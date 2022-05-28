@@ -1,11 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {SafeAreaView, Platform, PermissionsAndroid} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
-import {CarMarker} from '../Components/CarMarker';
-import {CarAreaSlider} from '../Components/CarAreaSlider';
-import {CarItem} from '../Components/CarItem';
+import {CarMarker} from '../components/CarMarker';
+import {CarAreaSlider} from '../components/CarAreaSlider';
+import {CarItem} from '../components/CarItem';
 import {RTDB} from '../services/RTDB';
+import {AboutButton} from '../components/AboutButton';
 
 interface Region {
   latitude: number;
@@ -26,7 +27,7 @@ interface Car {
   location: Location;
 }
 
-const App = () => {
+export function Map() {
   const [hasLocationPermission, setHasLocationPermission] =
     useState<boolean>(false);
   const [region, setRegion] = useState<Region>();
@@ -113,8 +114,8 @@ const App = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
       }}>
       <MapView
         ref={mapViewRef}
@@ -150,6 +151,7 @@ const App = () => {
           />
         ))}
       </MapView>
+      <AboutButton />
       <CarAreaSlider>
         <>
           {cars?.map((car, index) => (
@@ -164,6 +166,4 @@ const App = () => {
       </CarAreaSlider>
     </SafeAreaView>
   );
-};
-
-export default App;
+}

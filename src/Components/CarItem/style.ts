@@ -11,7 +11,8 @@ export const CarItemContainer = styled.TouchableOpacity.attrs({
   align-items: center;
   border-radius: ${RFValue(5)}px;
   width: ${Dimensions.get('screen').width * 0.45}px;
-  margin-left: ${RFValue(7)}px;
+  margin-left: ${RFValue(5)}px;
+  margin-right: ${RFValue(5)}px;
   padding: ${RFValue(5)}px;
 `;
 

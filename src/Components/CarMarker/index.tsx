@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 import {Marker as MarkerRNM} from 'react-native-maps';
 import {CarCallout} from './CarCallout';
 import {Icon, IconArea} from './style';
@@ -22,7 +22,7 @@ export const CarMarker = function ({coordinate, plate}: MarkerProps) {
         <Icon size={35} source={require('../../assets/car.png')} />
         <Icon size={10} source={require('../../assets/triangle.png')} />
       </IconArea>
-      <CarCallout plate={plate} markerRef={markerRef}/>
+      <CarCallout plate={plate} markerRef={markerRef} />
     </MarkerRNM>
   );
 };
