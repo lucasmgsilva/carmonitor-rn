@@ -1,12 +1,17 @@
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
 import {ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {NavigationStackProps} from '../App';
 import {Icon} from '../components/CarMarker/style';
-import {Stack, Text} from '../global/styles';
+import {GenericButton, Stack, Text} from '../global/styles';
 import {useTranslation} from '../i18n';
 
 export function About() {
   const {t} = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<NavigationStackProps>>();
 
   return (
     <SafeAreaView>
@@ -44,6 +49,12 @@ export function About() {
         <Text ml={30} mr={15} mt={-6}>
           - Luciano Moises Venturine.
         </Text>
+
+        <Stack dir="horizontal" justify="center" mt={20}>
+          <GenericButton onPress={() => navigation.goBack()}>
+            <Text fontWeight="bold">{t('buttons.turnBack').toUpperCase()}</Text>
+          </GenericButton>
+        </Stack>
       </ScrollView>
     </SafeAreaView>
   );

@@ -116,3 +116,12 @@ export const Stack = styled.View<StackProps>`
       margin-top: ${RFValue(mt)}px;
     `}
 `;
+
+export const GenericButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})`
+  border: 1px solid black;
+  padding: ${RFValue(8)}px ${RFValue(24)}px;
+  border-radius: ${RFValue(8)}px;
+  margin-top: ${RFValue(5)}px;
+`;

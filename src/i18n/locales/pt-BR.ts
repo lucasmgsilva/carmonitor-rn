@@ -19,4 +19,7 @@ export default {
     triggerAlarm: 'Disparar um alarme',
     whoDeveloped: 'Quem desenvolveu?',
   },
+  buttons: {
+    turnBack: 'Voltar',
+  },
 };
