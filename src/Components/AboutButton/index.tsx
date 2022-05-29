@@ -1,8 +1,9 @@
 import React from 'react';
-import {AboutButtonStyle, AboutIcon} from './style';
+import {AboutButtonStyle} from './style';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationStackProps} from '../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Icon} from '../CarMarker/style';
 
 export function AboutButton() {
   const navigation =
@@ -10,7 +11,7 @@ export function AboutButton() {
 
   return (
     <AboutButtonStyle onPress={() => navigation.navigate('About')}>
-      <AboutIcon size={35} />
+      <Icon size={40} source={require('../../assets/about.png')} />
     </AboutButtonStyle>
   );
 }

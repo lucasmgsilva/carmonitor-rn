@@ -11,9 +11,10 @@ interface Coordinate {
 interface MarkerProps {
   coordinate: Coordinate;
   plate: string;
+  speed: number;
 }
 
-export const CarMarker = function ({coordinate, plate}: MarkerProps) {
+export const CarMarker = function ({coordinate, plate, speed}: MarkerProps) {
   const markerRef = useRef<MarkerRNM>();
 
   return (
@@ -22,7 +23,7 @@ export const CarMarker = function ({coordinate, plate}: MarkerProps) {
         <Icon size={35} source={require('../../assets/car.png')} />
         <Icon size={10} source={require('../../assets/triangle.png')} />
       </IconArea>
-      <CarCallout plate={plate} markerRef={markerRef} />
+      <CarCallout plate={plate} markerRef={markerRef} speed={speed} />
     </MarkerRNM>
   );
 };

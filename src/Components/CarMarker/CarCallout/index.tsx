@@ -11,10 +11,11 @@ import {useTranslation} from '../../../i18n';
 
 interface CarCalloutProps {
   plate: string;
+  speed: number;
   markerRef: Ref<MarkerRNM>;
 }
 
-export function CarCallout({plate, markerRef}: CarCalloutProps) {
+export function CarCallout({plate, speed, markerRef}: CarCalloutProps) {
   const {t} = useTranslation();
   const [playAlarmSound, setPlayAlarmSound] = useState<boolean>();
 
@@ -29,18 +30,22 @@ export function CarCallout({plate, markerRef}: CarCalloutProps) {
     setTimeout(() => {
       markerRef?.current?.showCallout();
     }, 200);
-  }, [playAlarmSound]);
+  }, [markerRef, playAlarmSound]);
 
   useEffect(() => {
     RTDB.carsReference.child(plate).on('value', snapshot => {
       setPlayAlarmSound(snapshot.val().playAlarmSound);
     });
-  }, []);
+  }, [plate]);
 
   return (
     <CarCalloutContainer tooltip onPress={handleClick}>
       <CarCalloutArea>
         <CarCalloutText>{plate}</CarCalloutText>
+        <CarCalloutText>
+          {speed > 5 ? speed.toFixed(2) : (0).toFixed(2)}{' '}
+          {t('car.kilometersPerHour')}
+        </CarCalloutText>
         <CarCalloutButton>
           <CarCalloutText>
             {playAlarmSound
