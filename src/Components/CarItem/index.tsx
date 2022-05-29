@@ -19,8 +19,7 @@ export const CarItem = function ({plate, speed, onPress}: CarItemProps) {
         {t('car.plate')}: {plate}
       </CarItemRow>
       <CarItemRow>
-        {t('car.speed')}: {speed > 5 ? speed.toFixed(2) : (0).toFixed(2)}{' '}
-        {t('car.kilometersPerHour')}
+        {`${speed?.toFixed(2)} ${t('car.kilometersPerHour')}`}
       </CarItemRow>
     </CarItemContainer>
   );

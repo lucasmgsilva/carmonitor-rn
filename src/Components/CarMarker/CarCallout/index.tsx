@@ -42,10 +42,6 @@ export function CarCallout({plate, speed, markerRef}: CarCalloutProps) {
     <CarCalloutContainer tooltip onPress={handleClick}>
       <CarCalloutArea>
         <CarCalloutText>{plate}</CarCalloutText>
-        <CarCalloutText>
-          {speed > 5 ? speed.toFixed(2) : (0).toFixed(2)}{' '}
-          {t('car.kilometersPerHour')}
-        </CarCalloutText>
         <CarCalloutButton>
           <CarCalloutText>
             {playAlarmSound
