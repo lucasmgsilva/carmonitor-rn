@@ -149,7 +149,6 @@ export function Map() {
               longitude: car?.location?.lng,
             }}
             plate={car?.id}
-            speed={car?.location?.speed}
           />
         ))}
       </MapView>

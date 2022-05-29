@@ -11,11 +11,10 @@ import {useTranslation} from '../../../i18n';
 
 interface CarCalloutProps {
   plate: string;
-  speed: number;
   markerRef: Ref<MarkerRNM>;
 }
 
-export function CarCallout({plate, speed, markerRef}: CarCalloutProps) {
+export function CarCallout({plate, markerRef}: CarCalloutProps) {
   const {t} = useTranslation();
   const [playAlarmSound, setPlayAlarmSound] = useState<boolean>();
 
