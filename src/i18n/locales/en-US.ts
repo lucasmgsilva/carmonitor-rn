@@ -6,7 +6,7 @@ export default {
   car: {
     plate: 'Plate',
     speed: 'Speed',
-    kilometersPerHour: 'Km/h',
+    kilometersPerHour: 'km/h',
   },
   about: {
     whatIsIt: 'What is it?',
