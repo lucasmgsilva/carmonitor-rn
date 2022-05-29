@@ -12,8 +12,8 @@ export type NavigationStackProps = {
 const Stack = createNativeStackNavigator<NavigationStackProps>();
 
 import {LogBox} from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs(); //Ignore all log notifications
+LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreAllLogs();
 
 function App() {
   return (
