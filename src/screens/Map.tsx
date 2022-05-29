@@ -1,5 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, Platform, PermissionsAndroid} from 'react-native';
+import {
+  SafeAreaView,
+  Platform,
+  PermissionsAndroid,
+  ViewProps,
+} from 'react-native';
 import MapView from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import {CarMarker} from '../components/CarMarker';
@@ -26,6 +31,20 @@ interface Car {
   playAlarmSound: boolean;
   location: Location;
 }
+
+const safeAreaViewStyles = {
+  flex: 1,
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+} as ViewProps;
+
+const mapViewStyles = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
+} as ViewProps;
 
 export function Map() {
   const [hasLocationPermission, setHasLocationPermission] =
@@ -104,21 +123,10 @@ export function Map() {
   }, [hasLocationPermission]);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-      }}>
+    <SafeAreaView style={safeAreaViewStyles}>
       <MapView
         ref={mapViewRef}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-        }}
+        style={mapViewStyles}
         initialRegion={region}
         //region={region}
         //onRegionChange={}
