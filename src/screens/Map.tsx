@@ -78,13 +78,6 @@ export function Map() {
       },
       1000,
     );
-
-    /* setRegion({
-      latitude: location.lat,
-      longitude: location.lng,
-      latitudeDelta,
-      longitudeDelta,
-    }); */
   }
 
   useEffect(() => {
