@@ -47,7 +47,7 @@ export function About() {
           - Lucas Matheus Gomes da Silva;
         </Text>
         <Text ml={30} mr={15} mt={-6}>
-          - Luciano Moises Venturine.
+          - Luciano Moises Ventorine.
         </Text>
 
         <Stack dir="horizontal" justify="center" mt={20}>
